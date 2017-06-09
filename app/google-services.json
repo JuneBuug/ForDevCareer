@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "47186097533",
+    "firebase_url": "https://univ-info.firebaseio.com",
+    "project_id": "univ-info",
+    "storage_bucket": "univ-info.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47186097533:android:335f5298e235fb8c",
+        "android_client_info": {
+          "package_name": "com.example.junekim.univinfo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "47186097533-je0e1ibl7tfkviesc3iooc84andkv467.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.junekim.univinfo",
+            "certificate_hash": "af960b45b0b50235a4c0fe5f9511eb1c2f79f0b9"
+          }
+        },
+        {
+          "client_id": "47186097533-ub8f1vtg031j8mpf1lbibdapre8fm2k5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgPN5Jwok3K3qcC9vKp_NA13bHBRSsGJQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "47186097533-ub8f1vtg031j8mpf1lbibdapre8fm2k5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

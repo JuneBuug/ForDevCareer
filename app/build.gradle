@@ -27,6 +27,7 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:design:25.0.0'
     testCompile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile 'io.realm:realm-android:0.87.1'
@@ -61,5 +62,12 @@ dependencies {
 dependencies {
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
+}
+dependencies {
+    compile 'com.android.support:support-v4:25.+'
+    compile 'com.android.support:recyclerview-v7:25.+'
+}
+dependencies {
+    compile 'com.android.support:support-v4:25.+'
 }
 

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/ForDevCareer.iml" filepath="$PROJECT_DIR$/ForDevCareer.iml" />
       <module fileurl="file://$PROJECT_DIR$/UnivInfo.iml" filepath="$PROJECT_DIR$/UnivInfo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

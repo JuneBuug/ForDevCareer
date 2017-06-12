@@ -36,31 +36,20 @@ import static com.google.android.gms.internal.zzs.TAG;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends FragmentActivity{
 
-//    @ViewById
-//    ViewPager pager;
+    @ViewById
+    ViewPager pager;
 
     @ViewById
     TabLayout main_tabs;
 
-//    @ViewById
-//    Fragment main_fragment;
-
     private Fragment fragment1,fragment2,fragment3;
 
-//    private TabPagerAdapter mAdapter;
+    private TabPagerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        FragmentManager fm = getSupportFragmentManager();
-//
-//        android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
-//        fragment1 = new InternshipFragment_();
-//        ft.replace(R.id.main_fragment,fragment1);
-//        ft.commit();
-        fragment1 = new InternshipFragment_();
-        changeFragment(fragment1);
 
     }
 
@@ -68,42 +57,37 @@ public class MainActivity extends FragmentActivity{
     protected void afterViews(){
 
 
-
+        fragment1 = new InternshipFragment_();
         fragment2 = new InternshipFragment_();
         fragment3 = new InternshipFragment_();
 
-//        FragmentManager fm = getSupportFragmentManager();
-//
-//        android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
-//
-//        ft.replace(R.id.main_fragment,fragment1);
 
         main_tabs.addTab(main_tabs.newTab().setText("").setIcon(R.drawable.ic_internship));
         main_tabs.addTab(main_tabs.newTab().setText("").setIcon(R.drawable.ic_scholarship));
         main_tabs.addTab(main_tabs.newTab().setText("").setIcon(R.drawable.ic_myinfo));
 
-//        mAdapter = new TabPagerAdapter(this.getSupportFragmentManager(),main_tabs.getTabCount());
+        mAdapter = new TabPagerAdapter(this.getSupportFragmentManager(),main_tabs.getTabCount());
 
-//        pager.setAdapter(mAdapter);
-//        pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(main_tabs));
-//
-//        main_tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
-//
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                pager.setCurrentItem(tab.getPosition());
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
+        pager.setAdapter(mAdapter);
+        pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(main_tabs));
+
+        main_tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
+
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                pager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference myRef = db.getReference("message");
@@ -126,43 +110,37 @@ public class MainActivity extends FragmentActivity{
         });
     }
 
-   private void changeFragment(Fragment fragment){
-       android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-       fragmentTransaction.replace(R.id.main_fragment,fragment);
-       fragmentTransaction.addToBackStack(null);
-       fragmentTransaction.commitAllowingStateLoss();
 
-   }
-//    public class TabPagerAdapter extends FragmentPagerAdapter{
-//
-//        private int tabCount;
-//
-//        public TabPagerAdapter(FragmentManager fm,int tabCount) {
-//            super(fm);
-//            this.tabCount = tabCount;
-//        }
-//
-//
-//        @Override
-//        public Fragment getItem(int position) {
-//
-//            switch (position) {
-//                case 0:
-//                    return fragment1;
-//                case 1:
-//                    return fragment2;
-//                case 2:
-//                    return fragment3;
-//                default:
-//                    return null;
-//            }
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return tabCount;
-//        }
-//    }
+    public class TabPagerAdapter extends FragmentPagerAdapter{
+
+        private int tabCount;
+
+        public TabPagerAdapter(FragmentManager fm,int tabCount) {
+            super(fm);
+            this.tabCount = tabCount;
+        }
+
+
+        @Override
+        public Fragment getItem(int position) {
+
+            switch (position) {
+                case 0:
+                    return fragment1;
+                case 1:
+                    return fragment2;
+                case 2:
+                    return fragment3;
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return tabCount;
+        }
+    }
 
 
 

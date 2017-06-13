@@ -19,6 +19,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.junekim.univinfo.Model.Internship;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,6 +46,7 @@ public class MainActivity extends FragmentActivity{
     private Fragment fragment1,fragment2,fragment3;
 
     private TabPagerAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,25 +91,25 @@ public class MainActivity extends FragmentActivity{
             }
         });
 
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = db.getReference("message");
-
-        myRef.setValue("안녕 나는 준");
-
-
-        myRef.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG,"Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG,"값을 읽는데 실패했습니다.");
-            }
-        });
+//        FirebaseDatabase db = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = db.getReference("message");
+//
+//        myRef.setValue("안녕 나는 준");
+//
+//
+//        myRef.addValueEventListener(new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                String value = dataSnapshot.getValue(String.class);
+//                Log.d(TAG,"Value is: " + value);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.d(TAG,"값을 읽는데 실패했습니다.");
+//            }
+//        });
     }
 
 

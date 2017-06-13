@@ -4,12 +4,21 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.junekim.univinfo.Model.Internship;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -17,6 +26,8 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.google.android.gms.internal.zzs.TAG;
 
 
 /**
@@ -26,36 +37,68 @@ import java.util.List;
 @EFragment(R.layout.fragment_internship)
 public class InternshipFragment  extends Fragment {
 
+    private static final String TAG = "IntershipFragment" ;
     @ViewById
     ListView internship_list;
 
-    private ArrayList<String> dummys = new ArrayList<String>();
+    private ArrayList<Internship> dummys = new ArrayList<Internship>();
+
 
     private ListViewAdapter mAdapter;
+    private DatabaseReference myRef;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        myRef = db.getReference("internship").child("one");
+
+    }
+
+
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                Internship internship = dataSnapshot.getValue(Internship.class);
+                // [START_EXCLUDE]
+                dummys.add(internship);
+
+                // [END_EXCLUDE]
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // [START_EXCLUDE]
+                Toast.makeText(getActivity(), "Failed to load post.",
+                        Toast.LENGTH_SHORT).show();
+                // [END_EXCLUDE]
+            }
+        });
+
+
     }
 
     @AfterViews
     protected void afterViews(){
 
-        for(int i=0;i<5;i++){
-            dummys.add("a");
-        }
-
         mAdapter = new ListViewAdapter(dummys);
         internship_list.setAdapter(mAdapter);
-
     }
 
 
     private class ListViewAdapter extends BaseAdapter {
 
-        private List<String> mList;
+        private List<Internship> mList;
 
-        public ListViewAdapter(List<String> list){
+        public ListViewAdapter(List<Internship> list){
             super();
             this.mList = list;
         }
@@ -77,18 +120,22 @@ public class InternshipFragment  extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            final ViewHolder holder;
+            final ViewHolder holder = new ViewHolder();
+            final Internship mInternship = mList.get(position);
 
             if(convertView == null){
-                holder = new ViewHolder();
+//                holder = new ViewHolder();
                 LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.view_internship_card, null);
-
-
-
+                setViewHolder(convertView,holder);
                 convertView.setTag(holder);
             }else{
                 convertView.getTag();
+            }
+
+
+            if(mInternship.title!=null){
+                holder.job_name.setText(mInternship.title);
             }
 
 
@@ -96,12 +143,12 @@ public class InternshipFragment  extends Fragment {
         }
 
         private void setViewHolder(View convertView, ViewHolder holder) {
-
+                holder.job_name = (TextView) convertView.findViewById(R.id.job_name);
         }
 
     }
 
     private class ViewHolder {
-        public TextView title, subtitle;
+        public TextView job_name;
     }
 }

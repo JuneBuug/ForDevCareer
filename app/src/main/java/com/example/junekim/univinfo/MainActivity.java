@@ -60,7 +60,7 @@ public class MainActivity extends FragmentActivity{
 
 
         fragment1 = new InternshipFragment_();
-        fragment2 = new InternshipFragment_();
+        fragment2 = new ScholarshipFragment_();
         fragment3 = new InternshipFragment_();
 
 

@@ -61,7 +61,7 @@ public class MainActivity extends FragmentActivity{
 
         fragment1 = new InternshipFragment_();
         fragment2 = new ScholarshipFragment_();
-        fragment3 = new InternshipFragment_();
+        fragment3 = new MoreFragment_();
 
 
         main_tabs.addTab(main_tabs.newTab().setText("").setIcon(R.drawable.ic_internship));

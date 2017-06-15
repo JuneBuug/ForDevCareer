@@ -45,12 +45,35 @@ public class ScholarshipFragment extends Fragment {
 
     private ListViewAdapter mAdapter;
     private DatabaseReference myRef;
+    private Scholarship scholarship;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         myRef = db.getReference("scholarship").child("one");
+
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // Get Post object and use the values to update the UI
+//                Scholarship scholarship = dataSnapshot.getValue(Scholarship.class);
+//                // [START_EXCLUDE]
+//                dummys.add(scholarship);
+//
+//                // [END_EXCLUDE]
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                // Getting Post failed, log a message
+//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+//                // [START_EXCLUDE]
+//                Toast.makeText(getActivity(), "Failed to load post.",
+//                        Toast.LENGTH_SHORT).show();
+//                // [END_EXCLUDE]
+//            }
+//        });
 
     }
 
@@ -60,29 +83,19 @@ public class ScholarshipFragment extends Fragment {
     public void onStart(){
         super.onStart();
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                Scholarship scholarship = dataSnapshot.getValue(Scholarship.class);
-                // [START_EXCLUDE]
+                scholarship = dataSnapshot.getValue(Scholarship.class);
                 dummys.add(scholarship);
-
-                // [END_EXCLUDE]
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // [START_EXCLUDE]
-                Toast.makeText(getActivity(), "Failed to load post.",
-                        Toast.LENGTH_SHORT).show();
-                // [END_EXCLUDE]
+                Toast.makeText(getActivity(),"장학금 정보를 불러오는데 실패했습니다.",Toast.LENGTH_LONG).show();
             }
         });
-
-
     }
 
     @AfterViews
@@ -119,24 +132,25 @@ public class ScholarshipFragment extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            final ViewHolder holder = new ViewHolder();
+            final ViewHolder holder;
             final Scholarship mScholarship = mList.get(position);
 
             if(convertView == null){
-//                holder = new ViewHolder();
+                holder = new ViewHolder();
                 LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.view_internship_card, null);
+                convertView = inflater.inflate(R.layout.view_scholarship_card, null);
                 setViewHolder(convertView,holder);
                 convertView.setTag(holder);
             }else{
-                convertView.getTag();
+                holder = (ViewHolder) convertView.getTag();
             }
 
 
-            if(mScholarship.title!=null){
-                holder.job_name.setText(mScholarship.title);
+            if(mScholarship!=null){
+                if(mScholarship.title!=null){
+                    holder.job_name.setText(mScholarship.title);
+                }
             }
-
 
             return convertView;
         }

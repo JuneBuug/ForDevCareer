@@ -44,8 +44,10 @@ public class InternshipFragment  extends Fragment {
     private ArrayList<Internship> dummys = new ArrayList<Internship>();
 
 
+    private Internship internship;
     private ListViewAdapter mAdapter;
     private DatabaseReference myRef;
+    private ValueEventListener internshiplistener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,27 +63,28 @@ public class InternshipFragment  extends Fragment {
     public void onStart(){
         super.onStart();
 
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                Internship internship = dataSnapshot.getValue(Internship.class);
-                // [START_EXCLUDE]
-                dummys.add(internship);
+       myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+           @Override
+           public void onDataChange(DataSnapshot dataSnapshot) {
+               // Get Post object and use the values to update the UI
+               internship = dataSnapshot.getValue(Internship.class);
+               // [START_EXCLUDE]
+               dummys.add(internship);
+               mAdapter.notifyDataSetChanged();
 
-                // [END_EXCLUDE]
-            }
+               // [END_EXCLUDE]
+           }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // [START_EXCLUDE]
-                Toast.makeText(getActivity(), "Failed to load post.",
-                        Toast.LENGTH_SHORT).show();
-                // [END_EXCLUDE]
-            }
-        });
+           @Override
+           public void onCancelled(DatabaseError databaseError) {
+               // Getting Post failed, log a message
+               Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+               // [START_EXCLUDE]
+               Toast.makeText(getActivity(), "Failed to load post.",
+                       Toast.LENGTH_SHORT).show();
+               // [END_EXCLUDE]
+           }
+       });
 
 
     }
@@ -93,6 +96,10 @@ public class InternshipFragment  extends Fragment {
         internship_list.setAdapter(mAdapter);
     }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+    }
 
     private class ListViewAdapter extends BaseAdapter {
 
@@ -120,24 +127,26 @@ public class InternshipFragment  extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            final ViewHolder holder = new ViewHolder();
+            final ViewHolder holder;
             final Internship mInternship = mList.get(position);
 
             if(convertView == null){
-//                holder = new ViewHolder();
+                holder = new ViewHolder();
                 LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.view_internship_card, null);
                 setViewHolder(convertView,holder);
                 convertView.setTag(holder);
             }else{
-                convertView.getTag();
+                holder = (ViewHolder) convertView.getTag();
             }
 
 
-            if(mInternship.title!=null){
-                holder.job_name.setText(mInternship.title);
-            }
+            if(mInternship!=null){
+                if(mInternship.title!=null){
+                    holder.job_name.setText(mInternship.title);
+                }
 
+            }
 
             return convertView;
         }
@@ -150,5 +159,12 @@ public class InternshipFragment  extends Fragment {
 
     private class ViewHolder {
         public TextView job_name;
+    }
+
+    public static boolean isEmpty(String string) {
+        if(string == null || string.equals("") || string.length() == 0) {
+            return true;
+        }
+        return false;
     }
 }

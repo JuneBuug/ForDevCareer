@@ -22,9 +22,10 @@
             android:textColor="@color/color_white"/>
 
         <TextView
+            android:id="@+id/endDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="150만원 / 월"
+            android:text="8월 31일 마감"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:textStyle="bold"

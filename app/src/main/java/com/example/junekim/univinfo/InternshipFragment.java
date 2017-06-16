@@ -1,5 +1,6 @@
 package com.example.junekim.univinfo;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +26,12 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static com.google.android.gms.internal.zzs.TAG;
@@ -48,15 +55,16 @@ public class InternshipFragment  extends Fragment {
     private ListViewAdapter mAdapter;
     private DatabaseReference myRef;
     private ValueEventListener internshiplistener;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        myRef = db.getReference("internship").child("one");
+//        myRef = db.getReference("internship").child("one");
+        myRef = db.getReference("internship");
 
     }
-
 
 
     @Override
@@ -67,10 +75,21 @@ public class InternshipFragment  extends Fragment {
            @Override
            public void onDataChange(DataSnapshot dataSnapshot) {
                // Get Post object and use the values to update the UI
-               internship = dataSnapshot.getValue(Internship.class);
+
+               ArrayList<Internship> internships = new ArrayList<Internship>();
+               for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                   internship = snapshot.getValue(Internship.class);
+                   internships.add(internship);
+               }
+
                // [START_EXCLUDE]
-               dummys.add(internship);
-               mAdapter.notifyDataSetChanged();
+//               dummys = internships;
+               mAdapter = new ListViewAdapter(internships);
+//               mAdapter.notifyDataSetChanged();
+
+               if(progressDialog != null){
+                   progressDialog.hide();
+               }
 
                // [END_EXCLUDE]
            }
@@ -80,7 +99,7 @@ public class InternshipFragment  extends Fragment {
                // Getting Post failed, log a message
                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
                // [START_EXCLUDE]
-               Toast.makeText(getActivity(), "Failed to load post.",
+               Toast.makeText(getActivity(), "인턴십 정보를 가져오는 데 실패했습니다.",
                        Toast.LENGTH_SHORT).show();
                // [END_EXCLUDE]
            }
@@ -92,7 +111,12 @@ public class InternshipFragment  extends Fragment {
     @AfterViews
     protected void afterViews(){
 
-        mAdapter = new ListViewAdapter(dummys);
+        if(progressDialog == null){
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.show();
+        }
+
+//        mAdapter = new ListViewAdapter(dummys);
         internship_list.setAdapter(mAdapter);
     }
 
@@ -146,6 +170,22 @@ public class InternshipFragment  extends Fragment {
                     holder.job_name.setText(mInternship.title);
                 }
 
+
+                if(mInternship.endDate!=null){
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                    try {
+                        Date date = dateFormat.parse(mInternship.endDate);
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(date);
+
+                        holder.endDate.setText(cal.get(Calendar.MONTH)+1+"월 "+cal.get(Calendar.DATE)+"일 마감");
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
             }
 
             return convertView;
@@ -153,12 +193,13 @@ public class InternshipFragment  extends Fragment {
 
         private void setViewHolder(View convertView, ViewHolder holder) {
                 holder.job_name = (TextView) convertView.findViewById(R.id.job_name);
+                holder.endDate = (TextView) convertView.findViewById(R.id.endDate);
         }
 
     }
 
     private class ViewHolder {
-        public TextView job_name;
+        public TextView job_name,endDate;
     }
 
     public static boolean isEmpty(String string) {

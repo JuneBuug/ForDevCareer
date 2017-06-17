@@ -6,11 +6,11 @@ package com.example.junekim.univinfo.Model;
 
 public class Internship {
 
-    public String endDate ; // 종료날짜
-    public String title ;  // 인턴십 제목
+    public String endDate; // 종료날짜
+    public String title;  // 인턴십 제목
 
 
-    public Internship(){
+    public Internship() {
         // 데이터 스냅샷을 위해서 필요한 생성자
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,7 @@ import static com.google.android.gms.internal.zzs.TAG;
 public class InternshipFragment  extends Fragment {
 
     private static final String TAG = "IntershipFragment" ;
+
     @ViewById
     ListView internship_list;
 
@@ -61,49 +63,56 @@ public class InternshipFragment  extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-//        myRef = db.getReference("internship").child("one");
         myRef = db.getReference("internship");
 
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(this.getClass().getSimpleName(), "onCreateView()");
+
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+
+                ArrayList<Internship> internships = new ArrayList<Internship>();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    internship = snapshot.getValue(Internship.class);
+                    internships.add(internship);
+                }
+
+                // [START_EXCLUDE]
+                mAdapter = new ListViewAdapter(internships);
+                internship_list.setAdapter(mAdapter);
+
+                if(progressDialog != null){
+                    progressDialog.hide();
+                }
+
+                // [END_EXCLUDE]
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // [START_EXCLUDE]
+                Toast.makeText(getActivity(), "인턴십 정보를 가져오는 데 실패했습니다.",
+                        Toast.LENGTH_SHORT).show();
+                // [END_EXCLUDE]
+            }
+        });
+
+        return inflater.inflate(R.layout.fragment_internship, null);
+    }
 
     @Override
     public void onStart(){
         super.onStart();
 
-       myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-           @Override
-           public void onDataChange(DataSnapshot dataSnapshot) {
-               // Get Post object and use the values to update the UI
 
-               ArrayList<Internship> internships = new ArrayList<Internship>();
-               for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                   internship = snapshot.getValue(Internship.class);
-                   internships.add(internship);
-               }
-
-               // [START_EXCLUDE]
-//               dummys = internships;
-               mAdapter = new ListViewAdapter(internships);
-//               mAdapter.notifyDataSetChanged();
-
-               if(progressDialog != null){
-                   progressDialog.hide();
-               }
-
-               // [END_EXCLUDE]
-           }
-
-           @Override
-           public void onCancelled(DatabaseError databaseError) {
-               // Getting Post failed, log a message
-               Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-               // [START_EXCLUDE]
-               Toast.makeText(getActivity(), "인턴십 정보를 가져오는 데 실패했습니다.",
-                       Toast.LENGTH_SHORT).show();
-               // [END_EXCLUDE]
-           }
-       });
 
 
     }
@@ -117,7 +126,7 @@ public class InternshipFragment  extends Fragment {
         }
 
 //        mAdapter = new ListViewAdapter(dummys);
-        internship_list.setAdapter(mAdapter);
+
     }
 
     @Override

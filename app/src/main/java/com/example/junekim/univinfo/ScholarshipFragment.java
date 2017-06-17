@@ -51,44 +51,26 @@ public class ScholarshipFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        myRef = db.getReference("scholarship").child("one");
+        myRef = db.getReference("scholarship");
 
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // Get Post object and use the values to update the UI
-//                Scholarship scholarship = dataSnapshot.getValue(Scholarship.class);
-//                // [START_EXCLUDE]
-//                dummys.add(scholarship);
-//
-//                // [END_EXCLUDE]
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                // Getting Post failed, log a message
-//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-//                // [START_EXCLUDE]
-//                Toast.makeText(getActivity(), "Failed to load post.",
-//                        Toast.LENGTH_SHORT).show();
-//                // [END_EXCLUDE]
-//            }
-//        });
 
     }
 
 
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(this.getClass().getSimpleName(), "onCreateView()");
 
-    @Override
-    public void onStart(){
-        super.onStart();
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                scholarship = dataSnapshot.getValue(Scholarship.class);
-                dummys.add(scholarship);
-                mAdapter.notifyDataSetChanged();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    scholarship = snapshot.getValue(Scholarship.class);
+                    dummys.add(scholarship);
+                }
+
+                mAdapter = new ListViewAdapter(dummys);
+                scholarship_list.setAdapter(mAdapter);
             }
 
             @Override
@@ -96,13 +78,15 @@ public class ScholarshipFragment extends Fragment {
                 Toast.makeText(getActivity(),"장학금 정보를 불러오는데 실패했습니다.",Toast.LENGTH_LONG).show();
             }
         });
+
+        return inflater.inflate(R.layout.fragment_scholarship, null);
     }
+
 
     @AfterViews
     protected void afterViews(){
 
-        mAdapter = new ListViewAdapter(dummys);
-        scholarship_list.setAdapter(mAdapter);
+
     }
 
 

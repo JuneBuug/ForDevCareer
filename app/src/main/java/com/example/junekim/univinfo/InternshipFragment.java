@@ -195,20 +195,39 @@ public class InternshipFragment  extends Fragment {
 
                 }
 
+
+                switch(mInternship.type) {
+                    case 0 : holder.type.setText("채용연계형"); break;
+                    case 1 : holder.type.setText("여름인턴"); break;
+                    case 2 : holder.type.setText("겨울인턴"); break;
+                    default: holder.type.setText("인턴");
+                }
+
+                if(mInternship.companyName!=null){
+                    holder.company_name.setText(mInternship.companyName);
+                }
+
+                if(mInternship.internshipDesc!=null){
+                    holder.job_description.setText(mInternship.internshipDesc);
+                }
+
             }
 
             return convertView;
         }
 
         private void setViewHolder(View convertView, ViewHolder holder) {
-                holder.job_name = (TextView) convertView.findViewById(R.id.job_name);
-                holder.endDate = (TextView) convertView.findViewById(R.id.endDate);
+            holder.job_name = (TextView) convertView.findViewById(R.id.job_name);
+            holder.endDate = (TextView) convertView.findViewById(R.id.endDate);
+            holder.company_name  = (TextView) convertView.findViewById(R.id.company_name);
+            holder.type = (TextView) convertView.findViewById(R.id.type);
+            holder.job_description = (TextView) convertView.findViewById(R.id.job_description);
         }
 
     }
 
     private class ViewHolder {
-        public TextView job_name,endDate;
+        public TextView job_name,endDate,company_name,type,job_description;
     }
 
     public static boolean isEmpty(String string) {

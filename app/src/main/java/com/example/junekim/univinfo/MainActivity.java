@@ -91,25 +91,6 @@ public class MainActivity extends FragmentActivity{
             }
         });
 
-//        FirebaseDatabase db = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = db.getReference("message");
-//
-//        myRef.setValue("안녕 나는 준");
-//
-//
-//        myRef.addValueEventListener(new ValueEventListener() {
-//
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                String value = dataSnapshot.getValue(String.class);
-//                Log.d(TAG,"Value is: " + value);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.d(TAG,"값을 읽는데 실패했습니다.");
-//            }
-//        });
     }
 
 

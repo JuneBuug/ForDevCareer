@@ -35,7 +35,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static com.google.android.gms.internal.zzs.TAG;
 
 
 /**
@@ -56,7 +55,6 @@ public class InternshipFragment  extends Fragment {
     private Internship internship;
     private ListViewAdapter mAdapter;
     private DatabaseReference myRef;
-    private ValueEventListener internshiplistener;
     private ProgressDialog progressDialog;
 
     @Override

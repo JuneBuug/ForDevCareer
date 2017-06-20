@@ -2,6 +2,7 @@ package com.example.junekim.univinfo;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -211,6 +214,13 @@ public class InternshipFragment  extends Fragment {
 
             }
 
+            holder.base_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    WebViewActivity_.intent(getActivity()).extra("url",mInternship.more_url).start();
+                }
+            });
+
             return convertView;
         }
 
@@ -220,12 +230,14 @@ public class InternshipFragment  extends Fragment {
             holder.company_name  = (TextView) convertView.findViewById(R.id.company_name);
             holder.type = (TextView) convertView.findViewById(R.id.type);
             holder.job_description = (TextView) convertView.findViewById(R.id.job_description);
+            holder.base_layout = (LinearLayout) convertView.findViewById(R.id.base_layout);
         }
 
     }
 
     private class ViewHolder {
         public TextView job_name,endDate,company_name,type,job_description;
+        public LinearLayout base_layout;
     }
 
     public static boolean isEmpty(String string) {

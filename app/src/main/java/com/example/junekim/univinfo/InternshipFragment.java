@@ -180,12 +180,19 @@ public class InternshipFragment  extends Fragment {
                     holder.job_name.setText(mInternship.title);
                 }
 
+                if(mInternship.companyname != null){
+                    holder.company_name.setText(mInternship.companyname);
+                }
 
-                if(mInternship.endDate!=null){
+                if(mInternship.internshipdesc != null){
+                    holder.job_description.setText(mInternship.internshipdesc);
+                }
+
+                if(mInternship.enddate!=null){
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
                     try {
-                        Date date = dateFormat.parse(mInternship.endDate);
+                        Date date = dateFormat.parse(mInternship.enddate);
                         Calendar cal = Calendar.getInstance();
                         cal.setTime(date);
 
@@ -201,23 +208,17 @@ public class InternshipFragment  extends Fragment {
                     case 0 : holder.type.setText("채용연계형"); break;
                     case 1 : holder.type.setText("여름인턴"); break;
                     case 2 : holder.type.setText("겨울인턴"); break;
+                    case 3 : holder.type.setText("신입"); break;
                     default: holder.type.setText("인턴");
                 }
 
-                if(mInternship.companyName!=null){
-                    holder.company_name.setText(mInternship.companyName);
-                }
-
-                if(mInternship.internshipDesc!=null){
-                    holder.job_description.setText(mInternship.internshipDesc);
-                }
 
             }
 
             holder.base_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    WebViewActivity_.intent(getActivity()).extra("url",mInternship.more_url).start();
+                    WebViewActivity_.intent(getActivity()).extra("url",mInternship.moreurl).start();
                 }
             });
 

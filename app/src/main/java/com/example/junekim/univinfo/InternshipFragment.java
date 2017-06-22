@@ -196,10 +196,28 @@ public class InternshipFragment  extends Fragment {
                         Calendar cal = Calendar.getInstance();
                         cal.setTime(date);
 
-                        holder.endDate.setText(cal.get(Calendar.MONTH)+1+"월 "+cal.get(Calendar.DATE)+"일 마감");
+                        holder.endDate.setText(cal.get(Calendar.MONTH)+1+"월 "+cal.get(Calendar.DATE)+"일 마감"); // 며칠 마감인지
+
+
+                        Calendar currentDate =  Calendar.getInstance();
+                        Date today = currentDate.getTime();
+                        int days = (int) ((date.getTime() -  today.getTime()) / (3600*24*1000));
+
+                        if(days == 0){
+                            holder.dday.setText("D-DAY");
+                        }else if(days < 0 ){
+                            holder.dday.setText("마감");
+                        }else{
+                            holder.dday.setText("D-"+days);
+                        }
+
+
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+
+
+
 
                 }
 
@@ -231,13 +249,14 @@ public class InternshipFragment  extends Fragment {
             holder.company_name  = (TextView) convertView.findViewById(R.id.company_name);
             holder.type = (TextView) convertView.findViewById(R.id.type);
             holder.job_description = (TextView) convertView.findViewById(R.id.job_description);
+            holder.dday = (TextView) convertView.findViewById(R.id.dday);
             holder.base_layout = (LinearLayout) convertView.findViewById(R.id.base_layout);
         }
 
     }
 
     private class ViewHolder {
-        public TextView job_name,endDate,company_name,type,job_description;
+        public TextView job_name,endDate,company_name,type,job_description,dday;
         public LinearLayout base_layout;
     }
 

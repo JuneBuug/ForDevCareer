@@ -126,8 +126,6 @@ public class InternshipFragment  extends Fragment {
             progressDialog.show();
         }
 
-//        mAdapter = new ListViewAdapter(dummys);
-
     }
 
     @Override
@@ -192,25 +190,26 @@ public class InternshipFragment  extends Fragment {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
                     try {
-                        Date date = dateFormat.parse(mInternship.enddate);
+                        Date due_date = dateFormat.parse(mInternship.enddate);
                         Calendar cal = Calendar.getInstance();
-                        cal.setTime(date);
+                        cal.setTime(due_date);
 
                         holder.endDate.setText(cal.get(Calendar.MONTH)+1+"월 "+cal.get(Calendar.DATE)+"일 마감"); // 며칠 마감인지
 
+//                        Calendar currentDate =  Calendar.getInstance();
+//                        Date today = currentDate.getTime();
+                        String todayStr = dateFormat.format(new Date());
+                        Date today = dateFormat.parse(todayStr);
 
-                        Calendar currentDate =  Calendar.getInstance();
-                        Date today = currentDate.getTime();
-                        int days = (int) ((date.getTime() -  today.getTime()) / (3600*24*1000));
 
-                        if(days == 0){
-                            holder.dday.setText("D-DAY");
-                        }else if(days < 0 ){
+                        if(due_date.compareTo(today) > 0){ // 마감 시간이 오늘보다 미래인 경우
+                            int days = (int) ((due_date.getTime() -  today.getTime()) / (3600*24*1000));
+                            holder.dday.setText("D-"+days);
+                        }else if(due_date.compareTo(today)<0){
                             holder.dday.setText("마감");
                         }else{
-                            holder.dday.setText("D-"+days);
+                            holder.dday.setText("D-DAY");
                         }
-
 
                     } catch (ParseException e) {
                         e.printStackTrace();

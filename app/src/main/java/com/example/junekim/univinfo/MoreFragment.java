@@ -1,32 +1,33 @@
 package com.example.junekim.univinfo;
 
-import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+
+import com.bumptech.glide.Glide;
 import com.example.junekim.univinfo.Model.Internship;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * Created by JuneKim on 2017. 6. 12..
@@ -38,11 +39,43 @@ public class MoreFragment extends Fragment {
     private static final String TAG = "MoreFragment" ;
 
 
+    @ViewById
+    ImageView profile_pic;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl(getResources().getString(R.string.UNIVINFO_FB_STORAGE_BASE_URL));
+        StorageReference pathReference = storageRef.child("images/1.jpg");
+
+
+        pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // FB storage에서 이미지 받아오는게 성공했을 경우
+
+                Glide.with(MoreFragment.this)
+                     .load(uri)
+                     .into(profile_pic);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+        return inflater.inflate(R.layout.fragment_more, null);
     }
 
 
@@ -53,10 +86,6 @@ public class MoreFragment extends Fragment {
 
     }
 
-    @AfterViews
-    protected void afterViews(){
-
-    }
 
     @Override
     public void onDestroy(){

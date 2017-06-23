@@ -31,7 +31,7 @@ public class WebViewActivity extends FragmentActivity{
     TextView web_title;
 
     @ViewById
-    ImageView ic_back;
+    ImageView ic_cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class WebViewActivity extends FragmentActivity{
     }
 
     @Click
-    void ic_back(){
+    void ic_cancel(){
         finish();
     }
 

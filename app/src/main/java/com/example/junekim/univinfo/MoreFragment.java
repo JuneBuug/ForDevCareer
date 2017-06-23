@@ -10,11 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
 import com.example.junekim.univinfo.Model.Internship;
+import com.example.junekim.univinfo.More.CreditsActivity;
+import com.example.junekim.univinfo.More.CreditsActivity_;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +27,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
@@ -41,6 +45,9 @@ public class MoreFragment extends Fragment {
 
     @ViewById
     ImageView profile_pic;
+
+    @ViewById
+    RelativeLayout more_option_1, more_option_2, more_option_3, more_option_4;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,10 +70,11 @@ public class MoreFragment extends Fragment {
             public void onSuccess(Uri uri) {
                 // FB storage에서 이미지 받아오는게 성공했을 경우
 
-                Glide.with(MoreFragment.this)
-                     .load(uri)
-                     .into(profile_pic);
-
+                if(uri != null){
+                    Glide.with(MoreFragment.this)
+                            .load(uri)
+                            .into(profile_pic);
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -93,4 +101,9 @@ public class MoreFragment extends Fragment {
     }
 
 
+
+    @Click
+    void more_option_4(){
+        CreditsActivity_.intent(this).start();
+    }
 }

@@ -28,6 +28,10 @@
         </activity>
 
 
+        <activity
+            android:name=".More.CreditsActivity_">
+        </activity>
+
     </application>
 
 </manifest>

@@ -64,9 +64,9 @@ public class MainActivity extends FragmentActivity{
         fragment3 = new MoreFragment_();
 
 
-        main_tabs.addTab(main_tabs.newTab().setText("인턴십").setIcon(R.drawable.ic_internship));
-        main_tabs.addTab(main_tabs.newTab().setText("장학금").setIcon(R.drawable.ic_scholarship));
-        main_tabs.addTab(main_tabs.newTab().setText("내정보").setIcon(R.drawable.ic_myinfo));
+        main_tabs.addTab(main_tabs.newTab().setText("").setIcon(R.drawable.ic_internship));
+        main_tabs.addTab(main_tabs.newTab().setText("").setIcon(R.drawable.ic_scholarship));
+        main_tabs.addTab(main_tabs.newTab().setText("").setIcon(R.drawable.ic_myinfo));
 
         mAdapter = new TabPagerAdapter(this.getSupportFragmentManager(),main_tabs.getTabCount());
 

@@ -32,7 +32,11 @@
             android:name=".More.CreditsActivity_">
         </activity>
 
-        
+        <activity
+            android:name=".More.SpecActivity_">
+        </activity>
+
+
 
     </application>
 

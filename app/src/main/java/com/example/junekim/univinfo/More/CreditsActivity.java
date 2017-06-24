@@ -40,7 +40,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-@EActivity(R.layout.activity_credits)
+@EActivity(R.layout.activity_spec)
 public class CreditsActivity extends FragmentActivity{
 
 
@@ -51,7 +51,7 @@ public class CreditsActivity extends FragmentActivity{
     ImageView ic_cancel;
 
     @ViewById
-    ListView credits_list;
+    ListView spec_list;
 
     private DatabaseReference myRef;
     private ListViewAdapter mAdapter;
@@ -85,7 +85,7 @@ public class CreditsActivity extends FragmentActivity{
 
                 // [START_EXCLUDE]
                 mAdapter = new ListViewAdapter(credits);
-                credits_list.setAdapter(mAdapter);
+                spec_list.setAdapter(mAdapter);
 
 
                 // [END_EXCLUDE]

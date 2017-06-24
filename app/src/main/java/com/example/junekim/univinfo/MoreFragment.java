@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.example.junekim.univinfo.Model.Internship;
 import com.example.junekim.univinfo.More.CreditsActivity;
 import com.example.junekim.univinfo.More.CreditsActivity_;
+import com.example.junekim.univinfo.More.SpecActivity_;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -101,6 +102,10 @@ public class MoreFragment extends Fragment {
     }
 
 
+    @Click
+    void more_option_2(){
+        SpecActivity_.intent(this).start();
+    }
 
     @Click
     void more_option_4(){

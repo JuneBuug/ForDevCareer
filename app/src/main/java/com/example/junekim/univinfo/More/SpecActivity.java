@@ -30,7 +30,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
-@EActivity(R.layout.activity_credits)
+@EActivity(R.layout.activity_spec)
 public class SpecActivity extends FragmentActivity{
 
 
@@ -38,10 +38,10 @@ public class SpecActivity extends FragmentActivity{
     TextView page_title;
 
     @ViewById
-    ImageView ic_cancel;
+    ImageView ic_cancel,no_spec;
 
     @ViewById
-    ListView credits_list;
+    ListView spec_list;
 
     private DatabaseReference myRef;
     private ListViewAdapter mAdapter;
@@ -61,36 +61,47 @@ public class SpecActivity extends FragmentActivity{
 
     @AfterViews
     protected void afterViews(){
+        ArrayList<Credit> credits = new ArrayList<Credit>();
+        mAdapter = new ListViewAdapter(credits);
+        spec_list.setAdapter(mAdapter);
 
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
+        if(credits.size() ==0 || credits == null){
+            no_spec.setVisibility(View.VISIBLE);
+            spec_list.setVisibility(View.GONE);
+        }else{
+            no_spec.setVisibility(View.GONE);
+            spec_list.setVisibility(View.VISIBLE);
+        }
 
-                ArrayList<Credit> credits = new ArrayList<Credit>();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Credit credit = snapshot.getValue(Credit.class);
-                    credits.add(credit);
-                }
-
-                // [START_EXCLUDE]
-                mAdapter = new ListViewAdapter(credits);
-                credits_list.setAdapter(mAdapter);
-
-
-                // [END_EXCLUDE]
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // [START_EXCLUDE]
-                Toast.makeText(getApplicationContext(), "참조 정보를 가져오는 데 실패했습니다.",
-                        Toast.LENGTH_SHORT).show();
-                // [END_EXCLUDE]
-            }
-        });
+//        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // Get Post object and use the values to update the UI
+//
+//                ArrayList<Credit> credits = new ArrayList<Credit>();
+//                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+//                    Credit credit = snapshot.getValue(Credit.class);
+//                    credits.add(credit);
+//                }
+//
+//                // [START_EXCLUDE]
+//                mAdapter = new ListViewAdapter(credits);
+//                credits_list.setAdapter(mAdapter);
+//
+//
+//                // [END_EXCLUDE]
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                // Getting Post failed, log a message
+////                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+//                // [START_EXCLUDE]
+//                Toast.makeText(getApplicationContext(), "참조 정보를 가져오는 데 실패했습니다.",
+//                        Toast.LENGTH_SHORT).show();
+//                // [END_EXCLUDE]
+//            }
+//        });
 
     }
 

@@ -23,7 +23,9 @@
            android:layout_toRightOf="@+id/ic_cancel"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text=""
+           android:text="도움주신 분들"
+           android:textSize="18sp"
+           android:textColor="@color/color_black100"
            android:layout_centerVertical="true"
            android:layout_marginLeft="8dp"/>
 

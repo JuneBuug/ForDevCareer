@@ -59,9 +59,9 @@ public class MainActivity extends FragmentActivity{
     protected void afterViews(){
 
 
-        fragment1 = new InternshipFragment_();
-        fragment2 = new ScholarshipFragment_();
-        fragment3 = new MoreFragment_();
+//        fragment1 = new InternshipFragment_();
+//        fragment2 = new ScholarshipFragment_();
+//        fragment3 = new MoreFragment_();
 
 
         main_tabs.addTab(main_tabs.newTab().setText("").setIcon(R.drawable.ic_internship));
@@ -109,13 +109,25 @@ public class MainActivity extends FragmentActivity{
 
             switch (position) {
                 case 0:
+                    if(fragment1 == null){
+                        fragment1 = new InternshipFragment_();
+                        return fragment1;
+                    }
                     return fragment1;
                 case 1:
+                    if(fragment2 == null){
+                        fragment2 = new ScholarshipFragment_();
+                        return fragment2;
+                    }
                     return fragment2;
                 case 2:
+                    if(fragment3 == null){
+                        fragment3 = new MoreFragment_();
+                        return fragment3;
+                    }
                     return fragment3;
                 default:
-                    return null;
+                    return fragment1;
             }
         }
 

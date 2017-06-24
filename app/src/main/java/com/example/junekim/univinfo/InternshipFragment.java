@@ -187,48 +187,51 @@ public class InternshipFragment  extends Fragment {
                 }
 
                 if(mInternship.enddate!=null){
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-                    try {
-                        Date due_date = dateFormat.parse(mInternship.enddate);
-                        Calendar cal = Calendar.getInstance();
-                        cal.setTime(due_date);
+                    holder.dday.setVisibility(View.VISIBLE);
 
-                        holder.endDate.setText(cal.get(Calendar.MONTH)+1+"월 "+cal.get(Calendar.DATE)+"일 마감"); // 며칠 마감인지
+                    if(mInternship.enddate.contains("채용")){ // 채용시 까지인 경우
+                        holder.endDate.setText("채용시까지");
+                        holder.dday.setVisibility(View.GONE);
+                    }else{
 
-//                        Calendar currentDate =  Calendar.getInstance();
-//                        Date today = currentDate.getTime();
-                        String todayStr = dateFormat.format(new Date());
-                        Date today = dateFormat.parse(todayStr);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+                        try {
+                            Date due_date = dateFormat.parse(mInternship.enddate);
+                            Calendar cal = Calendar.getInstance();
+                            cal.setTime(due_date);
 
-                        if(due_date.compareTo(today) > 0){ // 마감 시간이 오늘보다 미래인 경우
-                            int days = (int) ((due_date.getTime() -  today.getTime()) / (3600*24*1000));
-                            holder.dday.setText("D-"+days);
-                        }else if(due_date.compareTo(today)<0){
-                            holder.dday.setText("마감");
-                        }else{
-                            holder.dday.setText("D-DAY");
+                            holder.endDate.setText(cal.get(Calendar.MONTH)+1+"월 "+cal.get(Calendar.DATE)+"일 마감"); // 며칠 마감인지
+
+                            String todayStr = dateFormat.format(new Date());
+                            Date today = dateFormat.parse(todayStr);
+
+                            if(due_date.compareTo(today) > 0){ // 마감 시간이 오늘보다 미래인 경우
+                                int days = (int) ((due_date.getTime() -  today.getTime()) / (3600*24*1000));
+                                holder.dday.setText("D-"+days);
+                            }else if(due_date.compareTo(today) < 0){ //마감 시간이 지난 경우
+                                holder.dday.setText("마감");
+                            }else{
+                                holder.dday.setText("D-DAY");
+                            }
+
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
 
-                    } catch (ParseException e) {
-                        e.printStackTrace();
                     }
 
 
-
+                    switch(mInternship.type) {
+                        case 0 : holder.type.setText("채용연계형"); break;
+                        case 1 : holder.type.setText("여름인턴"); break;
+                        case 2 : holder.type.setText("겨울인턴"); break;
+                        case 3 : holder.type.setText("신입"); break;
+                        default: holder.type.setText("인턴");
+                    }
 
                 }
-
-
-                switch(mInternship.type) {
-                    case 0 : holder.type.setText("채용연계형"); break;
-                    case 1 : holder.type.setText("여름인턴"); break;
-                    case 2 : holder.type.setText("겨울인턴"); break;
-                    case 3 : holder.type.setText("신입"); break;
-                    default: holder.type.setText("인턴");
-                }
-
 
             }
 
@@ -259,10 +262,5 @@ public class InternshipFragment  extends Fragment {
         public LinearLayout base_layout;
     }
 
-    public static boolean isEmpty(String string) {
-        if(string == null || string.equals("") || string.length() == 0) {
-            return true;
-        }
-        return false;
-    }
+
 }

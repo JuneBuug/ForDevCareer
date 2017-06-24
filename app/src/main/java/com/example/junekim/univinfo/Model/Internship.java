@@ -8,7 +8,7 @@ public class Internship {
 
     public String enddate; // 종료날짜
     public String title;  // 인턴십 제목
-    public int type; // 0 : 채용 연계형, 1: 여름인턴, 2: 겨울인턴
+    public int type; // 0 : 채용 연계형, 1: 여름인턴, 2: 겨울인턴, 3: 신입
     public String companyname; // 회사 이름
     public String internshipdesc; // 인턴십 설명
     public String moreurl; // 지원 url

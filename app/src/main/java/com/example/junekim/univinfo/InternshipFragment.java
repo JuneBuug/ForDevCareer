@@ -98,7 +98,7 @@ public class InternshipFragment  extends Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                Log.w(TAG, "loadInternship:onCancelled", databaseError.toException());
                 // [START_EXCLUDE]
                 Toast.makeText(getActivity(), "인턴십 정보를 가져오는 데 실패했습니다.",
                         Toast.LENGTH_SHORT).show();
@@ -123,6 +123,7 @@ public class InternshipFragment  extends Fragment {
 
         if(progressDialog == null){
             progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setCancelable(false);
             progressDialog.show();
         }
 

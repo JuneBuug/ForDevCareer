@@ -1,5 +1,6 @@
 package com.example.junekim.univinfo;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -46,6 +47,7 @@ public class ScholarshipFragment extends Fragment {
     private ListViewAdapter mAdapter;
     private DatabaseReference myRef;
     private Scholarship scholarship;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,6 +73,11 @@ public class ScholarshipFragment extends Fragment {
 
                 mAdapter = new ListViewAdapter(dummys);
                 scholarship_list.setAdapter(mAdapter);
+
+                if(progressDialog != null){
+                    progressDialog.hide();
+                }
+
             }
 
             @Override
@@ -86,7 +93,11 @@ public class ScholarshipFragment extends Fragment {
     @AfterViews
     protected void afterViews(){
 
-
+        if(progressDialog == null){
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
     }
 
 

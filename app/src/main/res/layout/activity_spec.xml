@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:background="@drawable/no_spec"
+        android:background="@color/color_white"
         android:src="@drawable/no_spec"/>
 
 </RelativeLayout>

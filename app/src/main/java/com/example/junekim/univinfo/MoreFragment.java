@@ -66,23 +66,25 @@ public class MoreFragment extends Fragment {
         StorageReference pathReference = storageRef.child("images/1.jpg");
 
 
-        pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                // FB storage에서 이미지 받아오는게 성공했을 경우
+        if(pathReference.getDownloadUrl()!=null){
+            pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // FB storage에서 이미지 받아오는게 성공했을 경우
 
-                if(uri != null){
-                    Glide.with(MoreFragment.this)
-                            .load(uri)
-                            .into(profile_pic);
+                    if(uri != null || profile_pic!= null){
+                        Glide.with(MoreFragment.this)
+                                .load(uri)
+                                .into(profile_pic);
+                    }
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
 
-            }
-        });
+                }
+            });
+        }
 
         return inflater.inflate(R.layout.fragment_more, null);
     }

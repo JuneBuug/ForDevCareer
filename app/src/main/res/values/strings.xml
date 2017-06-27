@@ -10,4 +10,7 @@
 
     <string name="UNIVINFO_FB_STORAGE_BASE_URL">gs://univ-info.appspot.com</string>
     <string name="DDAY">D-DAY</string>
+    <string name="SPEC_DESC_HINT">담당한 업무의 내용을 상세히 적어주세요.\n그룹 프로젝트일 경우 맡은 부분을 적어주세요.</string>
+    <string name="SPEC_DIFFCULTY_HINT">개발적으로 어려웠던 점을 적어주세요.\n1.상황을 기술하고\n2.난점이 뭐였는지\n3.어떻게 해결했는지를 적어주세요.</string>
+    <string name="SPEC_LEARNING_HINT">개발적으로 배운 점을 적어주세요.</string>
 </resources>

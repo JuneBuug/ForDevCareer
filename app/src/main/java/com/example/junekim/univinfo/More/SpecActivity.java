@@ -59,6 +59,11 @@ public class SpecActivity extends FragmentActivity{
         finish();
     }
 
+    @Click
+    void no_spec(){
+        SpecWriteActivity_.intent(this).start();
+    }
+
     @AfterViews
     protected void afterViews(){
         ArrayList<Credit> credits = new ArrayList<Credit>();

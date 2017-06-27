@@ -36,6 +36,9 @@
             android:name=".More.SpecActivity_">
         </activity>
 
+        <activity
+            android:name=".More.SpecWriteActivity_">
+        </activity>
 
 
     </application>

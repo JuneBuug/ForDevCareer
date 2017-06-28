@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.junekim.univinfo.Model.Credit;
+import com.example.junekim.univinfo.Model.Spec;
 import com.example.junekim.univinfo.R;
 import com.example.junekim.univinfo.WebViewActivity_;
 import com.google.firebase.database.DataSnapshot;
@@ -51,7 +52,7 @@ public class SpecActivity extends FragmentActivity{
         super.onCreate(savedInstanceState);
 
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        myRef = db.getReference("credit");
+        myRef = db.getReference("spec");
     }
 
     @Click
@@ -66,55 +67,56 @@ public class SpecActivity extends FragmentActivity{
 
     @AfterViews
     protected void afterViews(){
-        ArrayList<Credit> credits = new ArrayList<Credit>();
-        mAdapter = new ListViewAdapter(credits);
-        spec_list.setAdapter(mAdapter);
 
-        if(credits.size() ==0 || credits == null){
-            no_spec.setVisibility(View.VISIBLE);
-            spec_list.setVisibility(View.GONE);
-        }else{
-            no_spec.setVisibility(View.GONE);
-            spec_list.setVisibility(View.VISIBLE);
-        }
 
-//        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // Get Post object and use the values to update the UI
-//
-//                ArrayList<Credit> credits = new ArrayList<Credit>();
-//                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-//                    Credit credit = snapshot.getValue(Credit.class);
-//                    credits.add(credit);
-//                }
-//
-//                // [START_EXCLUDE]
-//                mAdapter = new ListViewAdapter(credits);
-//                credits_list.setAdapter(mAdapter);
-//
-//
-//                // [END_EXCLUDE]
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                // Getting Post failed, log a message
-////                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-//                // [START_EXCLUDE]
-//                Toast.makeText(getApplicationContext(), "참조 정보를 가져오는 데 실패했습니다.",
-//                        Toast.LENGTH_SHORT).show();
-//                // [END_EXCLUDE]
-//            }
-//        });
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+
+                ArrayList<Spec> specs = new ArrayList<Spec>();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Spec spec = snapshot.getValue(Spec.class);
+                    specs.add(spec);
+                }
+
+
+
+                if(specs.size() ==0 || specs == null){
+                    no_spec.setVisibility(View.VISIBLE);
+                    spec_list.setVisibility(View.GONE);
+                }else{
+                    no_spec.setVisibility(View.GONE);
+                    spec_list.setVisibility(View.VISIBLE);
+                }
+
+                // [START_EXCLUDE]
+                mAdapter = new ListViewAdapter(specs);
+                spec_list.setAdapter(mAdapter);
+
+
+                // [END_EXCLUDE]
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // [START_EXCLUDE]
+                Toast.makeText(getApplicationContext(), "참조 정보를 가져오는 데 실패했습니다.",
+                        Toast.LENGTH_SHORT).show();
+                // [END_EXCLUDE]
+            }
+        });
 
     }
 
     private class ListViewAdapter extends BaseAdapter {
 
-        private List<Credit> mList;
+        private List<Spec> mList;
 
-        public ListViewAdapter(List<Credit> list){
+        public ListViewAdapter(List<Spec> list){
             super();
             this.mList = list;
         }
@@ -137,52 +139,51 @@ public class SpecActivity extends FragmentActivity{
         public View getView(int position, View convertView, ViewGroup parent) {
 
             final ViewHolder holder;
-            final Credit mCredit = mList.get(position);
+            final Spec mSpec = mList.get(position);
 
             if(convertView == null){
                 holder = new ViewHolder();
                 LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.view_credits_card, null);
+                convertView = inflater.inflate(R.layout.view_spec_list, null);
                 setViewHolder(convertView,holder);
                 convertView.setTag(holder);
             }else{
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            if(mCredit != null){
+            if(mSpec != null){
 
-                if(mCredit.source_by != null){
-                    holder.source_by.setText(mCredit.source_by);
+                if(mSpec.spec_name != null){
+                    holder.spec_name.setText(mSpec.spec_name);
                 }
 
-                if(mCredit.source_name != null){
-                    holder.source_name.setText(mCredit.source_name);
+                if(mSpec.period != null){
+                    holder.period.setText(mSpec.period);
                 }
 
-
-                holder.base_layout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        WebViewActivity_.intent(getApplicationContext())
-                                        .extra("url",mCredit.link_url)
-                                        .start();
-                    }
-                });
+//                holder.base_layout.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        WebViewActivity_.intent(getApplicationContext())
+//                                        .extra("url",mCredit.link_url)
+//                                        .start();
+//                    }
+//                });
             }
 
             return convertView;
         }
 
         private void setViewHolder(View convertView, ViewHolder holder) {
-            holder.source_name = (TextView) convertView.findViewById(R.id.source_name);
-            holder.source_by = (TextView) convertView.findViewById(R.id.source_by);
+            holder.spec_name = (TextView) convertView.findViewById(R.id.spec_name);
+            holder.period = (TextView) convertView.findViewById(R.id.period);
             holder.base_layout = (LinearLayout) convertView.findViewById(R.id.base_layout);
         }
 
     }
 
     private class ViewHolder {
-        public TextView source_name,source_by;
+        public TextView spec_name,period;
         public LinearLayout base_layout;
     }
 

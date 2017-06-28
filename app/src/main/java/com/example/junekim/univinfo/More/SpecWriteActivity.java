@@ -50,7 +50,7 @@ public class SpecWriteActivity extends Activity {
 
     @Click
     void write_done(){
-        //TODO 입력받은 것 검사해서 하나라도 없으면 돌려보내고 + Toast , 되면 데이터베이스 UUID 생성해서 에 넣기
+        //TODO 입력받은 것 검사해서 하나라도 없으면 돌려보내고 + Toast안뜸
 
         writeSpec();
 

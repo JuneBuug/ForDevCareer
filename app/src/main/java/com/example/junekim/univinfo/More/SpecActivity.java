@@ -39,7 +39,7 @@ public class SpecActivity extends FragmentActivity{
     TextView page_title;
 
     @ViewById
-    ImageView ic_cancel,no_spec;
+    ImageView ic_cancel,no_spec,ic_add;
 
     @ViewById
     ListView spec_list;
@@ -60,6 +60,12 @@ public class SpecActivity extends FragmentActivity{
         finish();
     }
 
+
+    @Click
+    void ic_add(){
+        SpecWriteActivity_.intent(this).start();
+    }
+
     @Click
     void no_spec(){
         SpecWriteActivity_.intent(this).start();
@@ -67,9 +73,7 @@ public class SpecActivity extends FragmentActivity{
 
     @AfterViews
     protected void afterViews(){
-
-
-
+        //TODO finish했을때 리프레시될수있도록 리스너 변경
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

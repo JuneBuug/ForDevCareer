@@ -83,26 +83,26 @@ public class SpecWriteActivity extends Activity {
 
 
         if( spec_title.length() == 0 || spec_title == null || spec_title.isEmpty()){
-            Toast.makeText(this,"스펙 이름을 입력해주세요.",Toast.LENGTH_SHORT);
+            Toast.makeText(this,"스펙 이름을 입력해주세요.",Toast.LENGTH_SHORT).show();
             return;
         }
 
 
         if( job.length() == 0 || job == null || job.isEmpty()){
-            Toast.makeText(this,"업무 내용을 입력해주세요.",Toast.LENGTH_SHORT);
+            Toast.makeText(this,"업무 내용을 입력해주세요.",Toast.LENGTH_SHORT).show();
             return;
         }
 
 
         if( difficulty_point.length() == 0 || difficulty_point == null || difficulty_point.isEmpty()){
-            Toast.makeText(this,"어려웠던 점을 입력해주세요.",Toast.LENGTH_SHORT);
+            Toast.makeText(this,"어려웠던 점을 입력해주세요.",Toast.LENGTH_SHORT).show();
             return;
         }
 
 
 
         if( learning_point.length() == 0 || learning_point == null || learning_point.isEmpty()){
-            Toast.makeText(this,"배운 점을 입력해주세요.",Toast.LENGTH_SHORT);
+            Toast.makeText(this,"배운 점을 입력해주세요.",Toast.LENGTH_SHORT).show();
             return;
         }
 

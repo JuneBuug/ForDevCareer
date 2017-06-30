@@ -74,7 +74,7 @@ public class SpecActivity extends FragmentActivity{
     @AfterViews
     protected void afterViews(){
         //TODO finish했을때 리프레시될수있도록 리스너 변경
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
@@ -108,7 +108,7 @@ public class SpecActivity extends FragmentActivity{
                 // Getting Post failed, log a message
 //                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
                 // [START_EXCLUDE]
-                Toast.makeText(getApplicationContext(), "참조 정보를 가져오는 데 실패했습니다.",
+                Toast.makeText(getApplicationContext(), "내 스펙을 가져오는 데 실패했습니다.",
                         Toast.LENGTH_SHORT).show();
                 // [END_EXCLUDE]
             }
